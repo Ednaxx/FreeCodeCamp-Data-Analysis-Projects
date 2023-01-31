@@ -18,19 +18,18 @@ def calculate_demographic_data(print_data=True):
     # What percentage of people without advanced education make more than 50K?
 
     # with and without `Bachelors`, `Masters`, or `Doctorate`
-    higher_education = round(len(df[(df["education"] == "Bachelors") & (df["salary"] == ">50K") |
-     (df["education"] == "Masters") & (df["salary"] == ">50K") |
-      (df["education"] == "Doctorate") & (df["salary"] == ">50K")]), 1)
+    higher_education = df[(df["education"] == "Bachelors") |
+     (df["education"] == "Masters") |
+      (df["education"] == "Doctorate")]
 
 
-    lower_education = round(len(df[(df["education"] != "Bachelors") &
+    lower_education = df[(df["education"] != "Bachelors") &
      (df["education"] != "Masters") &
-      (df["education"] != "Doctorate") &
-       (df["salary"] == ">50K")]), 1)
+      (df["education"] != "Doctorate")]
 
     # percentage with salary >50K
-    higher_education_rich = round(higher_education / len(df) * 100, 1)
-    lower_education_rich = round(lower_education / len(df) * 100, 1)
+    higher_education_rich = round(len(higher_education.query("salary == '>50K'")) / len(higher_education) * 100, 1)
+    lower_education_rich = round(len(lower_education.query("salary == '>50K'")) / len(lower_education) * 100, 1)
 
     # What is the minimum number of hours a person works per week (hours-per-week feature)?
     min_work_hours = df["hours-per-week"].min()
@@ -93,6 +92,4 @@ def calculate_demographic_data(print_data=True):
         highest_earning_country_percentage,
         'top_IN_occupation': top_IN_occupation
     }
-
-
-calculate_demographic_data()
+    
