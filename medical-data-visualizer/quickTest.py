@@ -21,7 +21,18 @@ df.loc[df["gluc"] > 1, "gluc"] = 1
 
 
 
+df_cat = pd.melt(df, id_vars=["cardio"], value_vars=["cholesterol", "gluc", 'smoke', 'alco', 'active', 'overweight'])
 
 
+# Group and reformat the data to split it by 'cardio'. Show the counts of each feature. You will have to rename one of the columns for the catplot to work correctly.
+df_cat = pd.DataFrame(df_cat.groupby(['cardio', 'variable', 'value'])['value'].count()).rename(columns={"value": 'total'}).reset_index()
+    
 
-print(pd.melt(df[["cholesterol", "gluc", 'smoke', 'alco', 'active', 'overweight']]))
+# Draw the catplot with 'sns.catplot()'
+
+cplot = sns.catplot(data=df_cat, x="variable", y="total", col="cardio", kind="bar", hue="value")
+
+# Get the figure for the output
+fig = cplot.fig
+
+fig.savefig('catplot.png')
