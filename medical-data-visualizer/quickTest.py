@@ -20,19 +20,28 @@ df.loc[df["gluc"] > 1, "gluc"] = 1
 
 
 
+df_heat = df[(df['ap_lo'] <= df['ap_hi']) &
+(df['height'] >= df['height'].quantile(0.025)) &
+(df['height'] <= df['height'].quantile(0.975)) &
+(df['weight'] >= df['weight'].quantile(0.025)) &
+(df['weight'] <= df['weight'].quantile(0.975))
+]
 
-df_cat = pd.melt(df, id_vars=["cardio"], value_vars=["cholesterol", "gluc", 'smoke', 'alco', 'active', 'overweight'])
+# Calculate the correlation matrix
+corr = df_heat.corr()
+
+    # Generate a mask for the upper triangle
+mask = np.triu(np.ones_like(corr, dtype=bool))
 
 
-# Group and reformat the data to split it by 'cardio'. Show the counts of each feature. You will have to rename one of the columns for the catplot to work correctly.
-df_cat = pd.DataFrame(df_cat.groupby(['cardio', 'variable', 'value'])['value'].count()).rename(columns={"value": 'total'}).reset_index()
-    
 
-# Draw the catplot with 'sns.catplot()'
+    # Set up the matplotlib figure
+fig, ax = plt.subplots(figsize=(11,9))
 
-cplot = sns.catplot(data=df_cat, x="variable", y="total", col="cardio", kind="bar", hue="value")
+    # Draw the heatmap with 'sns.heatmap()'
 
-# Get the figure for the output
-fig = cplot.fig
+sns.heatmap(corr, mask=mask, vmax=.3, center=0,
+square=True, linewidths=.5, cbar_kws={"shrink": .5}, annot=True, fmt=".1f")
 
-fig.savefig('catplot.png')
+    # Do not modify the next two lines
+fig.savefig('heatmap.png')
