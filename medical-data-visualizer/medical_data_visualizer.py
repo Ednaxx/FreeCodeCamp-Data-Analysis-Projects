@@ -7,10 +7,12 @@ import numpy as np
 df = pd.read_csv("medical_examination.csv")
 
 # Add 'overweight' column
-df["overweight"] = (df["weight"] / df["height"] * df["height"]) > 25
+df["overweight"] = (df["weight"] / ((df["height"]/100) ** 2)) > 25
 
 df.loc[df["overweight"] == True, "overweight"] = 1
 df.loc[df["overweight"] == False, "overweight"] = 0
+
+df.overweight = pd.to_numeric(df["overweight"])
 
 # Normalize data by making 0 always good and 1 always bad. If the value of 'cholesterol' or 'gluc' is 1, make the value 0. If the value is more than 1, make the value 1.
 
@@ -35,7 +37,7 @@ def draw_cat_plot():
     cplot = sns.catplot(data=df_cat, x="variable", y="total", col="cardio", kind="bar", hue="value")
 
     # Get the figure for the output
-    fig = cplot
+    fig = cplot.fig
 
 
     # Do not modify the next two lines
