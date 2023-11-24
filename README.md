@@ -4,7 +4,7 @@
 
 - Mean-Variance-Standard Deviation Calculator ✅
 - Demographic data analyzer ✅
-- Medical data visualizer
+- Medical data visualizer ✅
 - Page view time series visualizer
 - Sea level predictor
 
