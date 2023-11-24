@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 # Import data
-df = pd.read_csv("medical_data_visualizer\\medical_examination.csv", header=0)
+df = pd.read_csv("medical-data-visualizer\\medical_examination.csv", header=0)
 
 # Add 'overweight' column
 def BMI(row):
@@ -52,7 +52,7 @@ def draw_cat_plot():
 
 
     # Do not modify the next two lines
-    fig.savefig('./medical_data_visualizer/catplot.png')
+    fig.savefig('./medical-data-visualizer/catplot.png')
     return fig
 
 
@@ -81,5 +81,5 @@ def draw_heat_map():
     sns.heatmap(corr, mask=mask, square=True, annot=True, fmt=".1f", vmax=.3, center=0, linewidths=.5, cbar_kws={"shrink": .5})
 
     # Do not modify the next two lines
-    fig.savefig('./medical_data_visualizer/heatmap.png')
+    fig.savefig('./medical-data-visualizer/heatmap.png')
     return fig
