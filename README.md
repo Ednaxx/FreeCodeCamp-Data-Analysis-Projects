@@ -10,3 +10,5 @@
 
 
 [💻Course](https://www.freecodecamp.org/learn/data-analysis-with-python/)
+
+[📄Certificate](https://www.freecodecamp.org/certification/Ednax/data-analysis-with-python-v7)
